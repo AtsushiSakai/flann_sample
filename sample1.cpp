@@ -67,7 +67,7 @@ int main(int argc, char** argv)
     random_device rd;
     mt19937 mt(rd());
     
-    //dataset$B$r:n@.(B
+    //datasetを作成
     uniform_real_distribution<float> score(-10.0,10.0);
     for(int i=0;i<nData;i++){
       for(int j=0;j<nDim;j++){
@@ -90,19 +90,19 @@ int main(int argc, char** argv)
     Index<L2<float> > index(dataset, flann::KDTreeIndexParams(4));
     index.buildIndex();                                                                                               
     // index.knnSearch(query, indices, dists, nDim, flann::SearchParams(128));
-    chrono::system_clock::time_point  start, end; // $B7?$O(B auto $B$G2D(B
+    chrono::system_clock::time_point  start, end; // 型は auto で可
 
     //Bruteforce
-    start = chrono::system_clock::now(); // $B7WB,3+;O;~4V(B)
+    start = chrono::system_clock::now(); // 計測開始時間)
     int ind=BruteForceSearch(dataset,query);
     cout<<"brute:ind:"<<ind<<endl;
-    end = chrono::system_clock::now();  // $B7WB,=*N;;~4V(B
+    end = chrono::system_clock::now();  // 計測終了時間
     double msec = (double)chrono::duration_cast<chrono::nanoseconds>(end-start).count()/1000.0;
     cout<<"time:"<<msec<<endl;
 
-    start = chrono::system_clock::now(); // $B7WB,3+;O;~4V(B)
+    start = chrono::system_clock::now(); // 計測開始時間)
     cout<<index.radiusSearch(query, indices, dists, 100.0,flann::SearchParams(128))<<endl;
-    end = chrono::system_clock::now();  // $B7WB,=*N;;~4V(B
+    end = chrono::system_clock::now();  // 計測終了時間
     msec = (double)chrono::duration_cast<chrono::nanoseconds>(end-start).count()/1000.0;
     cout<<"time:"<<msec<<endl;
 
